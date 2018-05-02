@@ -30,7 +30,7 @@ Trên Windows, các chương trình MySQL đọc các tùy chọn khởi động
 
 Trong bảng trước, `%PROGRAMDATA%` đại diện cho thư mục hệ thống tệp chứa dữ liệu ứng dụng cho tất cả người dùng trên máy chủ lưu trữ. Đường dẫn này mặc định là `C:ProgramData`trên Microsoft Windows Vista trở lên và `C:Documents and SettingsAll UsersApplication Data` trên các phiên bản cũ hơn của Microsoft Windows. 
 
-`%WINDIR%` đại diện cho vị trí của thư mục Windows của bạn. Điều này thường `C:WINDOWS`.Sử dụng lệnh sau để xác định vị trí chính xác của nó từ giá trị của biến môi trường `WINDIR` : 
+`%WINDIR%` đại diện cho vị trí của thư mục Windows của bạn. Nó thường là `C:WINDOWS`. Sử dụng lệnh sau để xác định vị trí chính xác của nó từ giá trị của biến môi trường `WINDIR` : 
     
     
     C:> echo %WINDIR%
@@ -40,25 +40,25 @@ Trong bảng trước, `%PROGRAMDATA%` đại diện cho thư mục hệ thống
     
     C:> echo %APPDATA%
 
-_`BASEDIR`_ đại diện cho thư mục cài đặt cơ sở MySQL. Khi MySQL 5.7 đã được cài đặt bằng cách sử dụng MySQL Installer, điều này thường `C:_`PROGRAMDIR`_MySQLMySQL 5.7 Server` ở _`PROGRAMDIR`_ đại diện cho thư mục chương trình (thông thường `Program Files` trên các phiên bản tiếng Anh của Windows), Xem [Section 2.3.3, "MySQL Installer for Windows"][9]. 
+_`BASEDIR`_ đại diện cho thư mục cài đặt cơ sở MySQL. Khi MySQL 5.7 đã được cài đặt bằng cách sử dụng MySQL Installer, nó thường là `C:_`PROGRAMDIR`_MySQLMySQL 5.7 Server` ở _`PROGRAMDIR`_ đại diện cho thư mục chương trình (thông thường `Program Files` trên các phiên bản tiếng Anh của Windows), Xem [Section 2.3.3, "MySQL Installer for Windows"][9]. 
 
 Trên các hệ thống giống Unix và Unix, các chương trình MySQL đọc các tùy chọn khởi động từ các tệp được hiển thị trong bảng sau, theo thứ tự được chỉ định (các tệp được liệt kê đầu tiên được đọc trước tiên, các tệp được đọc sau được ưu tiên).
 
 Ghi chú 
 
-Trên các nền tảng Unix, MySQL bỏ qua các tệp cấu hình world-writable. Điều này có ý như một thước đo về độ bảo mật. 
+Trên các nền tảng Unix, MySQL bỏ qua các tệp cấu hình world-writable. Điều này có ý nghĩa như một biện pháp bảo mật. 
 
 **Bảng 4.2 Các tệp tùy chọn được đọc trên các hệ thống giống Unix và Unix **
 
 | File Name               | Purpose                                                       |  
 | ----------------------- | ------------------------------------------------------------- |  
-| `/etc/my.cnf`           | Global options                                                |  
-| `/etc/mysql/my.cnf`     | Global options                                                |  
-| `_`SYSCONFDIR`_/my.cnf` | Global options                                                |  
-| `$MYSQL_HOME/my.cnf`    | Server-specific options (server only)                         |  
-| `defaults-extra-file`   | The file specified with [`\--defaults-extra-file`][8], if any |  
-| `~/.my.cnf`             | User-specific options                                         |  
-| `~/.mylogin.cnf`        | User-specific login path options (clients only)               |  
+| `/etc/my.cnf`           | Tùy chọn chung                                               |  
+| `/etc/mysql/my.cnf`     | Tùy chọn chung                                               |  
+| `_`SYSCONFDIR`_/my.cnf` | Tùy chọn chung                                               |  
+| `$MYSQL_HOME/my.cnf`    | Tùy chọn máy chủ cụ thể (chỉ dành cho máy chủ)              |  
+| `defaults-extra-file`   | Tệp được chỉ định [`\--defaults-extra-file`][8] nếu có |  
+| `~/.my.cnf`             | Tùy chọn người dùng cụ thể                                  |  
+| `~/.mylogin.cnf`        | Tùy chọn đường dẫn đăng nhập người dùng cụ thể (chỉ khách)      |  
 
 Trong bảng trước,, `~` đại diện cho thư mục chính của người dùng hiện tại (giá trị của `$HOME`). 
 
@@ -68,7 +68,7 @@ _`SYSCONFDIR`_ đại diện cho thư mục được chỉ định bằng [`SYSC
 
 _`DATADIR`_ thường là `/usr/local/mysql/data`, mặc dù điều này có thể thay đổi theo từng nền tảng hoặc phương pháp cài đặt. Giá trị là vị trí thư mục dữ liệu được xây dựng khi MySQL được biên dịch, chứ không phải vị trí được chỉ định bằng [`\--datadir`][12] tùy chọn khi mà [**mysqld**][1] khởi động.Sử dụng [`\--datadir`][12] tại thời gian chạy không ảnh hưởng đến nơi máy chủ tìm kiếm các tệp tùy chọn mà nó đọc trước khi xử lý bất kỳ tùy chọn nào.
 
-Nếu nhiều phiên bản của một tùy chọn đã cho được tìm thấy, cá thể cuối cùng được ưu tiên, với một ngoại lệ: dành cho **[mysqld**][1], cá thể đầu tiên của tùy chọn `[\--user`][13] được sử dụng như một biện pháp đề phòng bảo mật, để ngăn người dùng được chỉ định trong tệp tùy chọn bị ghi đè trên dòng lệnh
+Nếu nhiều phiên bản của một tùy chọn đã cho được tìm thấy, trường hợp cuối cùng được ưu tiên, với một ngoại lệ: dành cho **[mysqld**][1], cá thể đầu tiên của tùy chọn `[\--user`][13] được sử dụng như một biện pháp đề phòng bảo mật, để ngăn người dùng được chỉ định trong tệp tùy chọn bị ghi đè trên dòng lệnh
 
 Mô tả sau đây về cú pháp tệp tùy chọn áp dụng cho các tệp bạn chỉnh sửa theo cách thủ công. Điều này không bao gồm `.mylogin.cnf`, được tạo bằng  **[mysql_config_editor**][4] và được mã hóa.
 
